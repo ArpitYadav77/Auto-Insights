@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Meesho RTO Optimization Platform - Intelligent checkout validation, customer risk scoring, and address verification to reduce Return-To-Origin rates.">
+    <title>Meesho RTO Optimization Platform | Business Analytics Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <div class="logo-icon">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                        <rect width="32" height="32" rx="8" fill="url(#logoGrad)"/>
+                        <path d="M8 16L14 10L20 16L14 22L8 16Z" fill="white" opacity="0.9"/>
+                        <path d="M14 16L20 10L26 16L20 22L14 16Z" fill="white" opacity="0.6"/>
+                        <defs><linearGradient id="logoGrad" x1="0" y1="0" x2="32" y2="32"><stop stop-color="#6366f1"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient></defs>
+                    </svg>
+                </div>
+                <div class="logo-text">
+                    <span class="logo-title">Meesho RTO</span>
+                    <span class="logo-subtitle">Optimization Platform</span>
+                </div>
+            </div>
+            <button class="sidebar-close" id="sidebarClose" aria-label="Close sidebar">✕</button>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-section">
+                <span class="nav-section-title">Overview</span>
+                <a href="#dashboard" class="nav-link active" data-page="dashboard" id="nav-dashboard">
+                    <span class="nav-icon">📊</span>
+                    <span class="nav-text">Executive Dashboard</span>
+                </a>
+            </div>
+            <div class="nav-section">
+                <span class="nav-section-title">Operations</span>
+                <a href="#orders" class="nav-link" data-page="orders" id="nav-orders">
+                    <span class="nav-icon">📦</span>
+                    <span class="nav-text">Orders Management</span>
+                </a>
+                <a href="#customers" class="nav-link" data-page="customers" id="nav-customers">
+                    <span class="nav-icon">👥</span>
+                    <span class="nav-text">Customer Risk Analysis</span>
+                </a>
+                <a href="#addresses" class="nav-link" data-page="addresses" id="nav-addresses">
+                    <span class="nav-icon">📍</span>
+                    <span class="nav-text">Address Verification</span>
+                </a>
+            </div>
+            <div class="nav-section">
+                <span class="nav-section-title">Intelligence</span>
+                <a href="#checkout" class="nav-link" data-page="checkout" id="nav-checkout">
+                    <span class="nav-icon">⚡</span>
+                    <span class="nav-text">Checkout Decision Engine</span>
+                </a>
+                <a href="#analytics" class="nav-link" data-page="analytics" id="nav-analytics">
+                    <span class="nav-icon">🔍</span>
+                    <span class="nav-text">Analytics & SQL Insights</span>
+                </a>
+                <a href="#abtest" class="nav-link" data-page="abtest" id="nav-abtest">
+                    <span class="nav-icon">🧪</span>
+                    <span class="nav-text">A/B Testing Module</span>
+                </a>
+            </div>
+            <div class="nav-section">
+                <span class="nav-section-title">System</span>
+                <a href="#architecture" class="nav-link" data-page="architecture" id="nav-architecture">
+                    <span class="nav-icon">🏗️</span>
+                    <span class="nav-text">System Architecture</span>
+                </a>
+            </div>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="sidebar-user">
+                <div class="user-avatar">PM</div>
+                <div class="user-info">
+                    <span class="user-name">Product Manager</span>
+                    <span class="user-role">Business Analytics</span>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content" id="mainContent">
+        <!-- Top Bar -->
+        <header class="topbar" id="topbar">
+            <div class="topbar-left">
+                <button class="hamburger" id="hamburgerBtn" aria-label="Toggle sidebar">
+                    <span></span><span></span><span></span>
+                </button>
+                <h1 class="page-title" id="pageTitle">Executive Dashboard</h1>
+            </div>
+            <div class="topbar-center">
+                <div class="search-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="globalSearch" placeholder="Search orders, customers, cities..." autocomplete="off">
+                </div>
+            </div>
+            <div class="topbar-right">
+                <button class="topbar-btn" id="themeToggle" aria-label="Toggle theme">
+                    <span class="theme-icon" id="themeIcon">🌙</span>
+                </button>
+                <button class="topbar-btn notification-btn" aria-label="Notifications">
+                    <span>🔔</span>
+                    <span class="notification-badge">3</span>
+                </button>
+                <div class="topbar-user">
+                    <div class="user-avatar-sm">PM</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Page Container -->
+        <div class="page-container" id="pageContainer">
+            <!-- Loading Skeleton -->
+            <div class="loading-screen" id="loadingScreen">
+                <div class="loader">
+                    <div class="loader-spinner"></div>
+                    <p>Loading platform data...</p>
+                </div>
+            </div>
+
+            <!-- Pages will be rendered dynamically by app.js -->
+        </div>
+    </main>
+
+    <!-- Modal Container -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal" id="modalContent">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle"></h2>
+                <button class="modal-close" id="modalClose">✕</button>
+            </div>
+            <div class="modal-body" id="modalBody"></div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Scripts -->
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
