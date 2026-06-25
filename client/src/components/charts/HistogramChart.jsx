@@ -38,8 +38,8 @@ export default function HistogramChart({ data = [], column = 'value', title = 'D
         <BarChart data={chartData} margin={{ top: 5, right: 5, left: -10, bottom: 5 }}>
           <defs>
             <linearGradient id={`histGrad-${column}`} x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#6366f1" stopOpacity={0.9} />
-              <stop offset="100%" stopColor="#8b5cf6" stopOpacity={0.5} />
+              <stop offset="0%" stopColor="#FF6B2B" stopOpacity={0.9} />
+              <stop offset="100%" stopColor="#FFAE00" stopOpacity={0.5} />
             </linearGradient>
           </defs>
           <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" vertical={false} />

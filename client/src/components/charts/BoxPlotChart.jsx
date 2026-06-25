@@ -67,8 +67,8 @@ export default function BoxPlotChart({ data = [], column = '', title = '' }) {
         <ComposedChart data={chartData} margin={{ top: 10, right: 10, left: -10, bottom: 5 }}>
           <defs>
             <linearGradient id="boxGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#8b5cf6" stopOpacity={0.8} />
-              <stop offset="100%" stopColor="#6366f1" stopOpacity={0.5} />
+              <stop offset="0%" stopColor="#FF6B2B" stopOpacity={0.8} />
+              <stop offset="100%" stopColor="#FFAE00" stopOpacity={0.5} />
             </linearGradient>
           </defs>
           <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" vertical={false} />
@@ -91,7 +91,7 @@ export default function BoxPlotChart({ data = [], column = '', title = '' }) {
             ))}
           </Bar>
           {/* Median marker */}
-          <Scatter dataKey="median" fill="#c084fc" shape="diamond" legendType="none" />
+          <Scatter dataKey="median" fill="#FFAE00" shape="diamond" legendType="none" />
         </ComposedChart>
       </ResponsiveContainer>
     </div>

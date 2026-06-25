@@ -32,8 +32,8 @@ export function Spinner({ size = 'md', className = '' }) {
         />
         <defs>
           <linearGradient id="spinGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#6366f1" />
-            <stop offset="100%" stopColor="#8b5cf6" />
+            <stop offset="0%" stopColor="#FF6B2B" />
+            <stop offset="100%" stopColor="#FFAE00" />
           </linearGradient>
         </defs>
       </svg>

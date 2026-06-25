@@ -112,7 +112,7 @@ export async function downloadPDF(elementId, filename = 'report.pdf') {
     const canvas = await html2canvas(element, {
       scale: 2,
       useCORS: true,
-      backgroundColor: '#0f0f23',
+      backgroundColor: '#0D0D0D',
       logging: false,
     })
 

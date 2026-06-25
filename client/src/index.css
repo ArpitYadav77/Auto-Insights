@@ -2,6 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  /* Mango Soda — Auto Insights */
+  --color-bg-page:      #0D0D0D;   /* body background */
+  --color-bg-sidebar:   #111111;   /* sidebar / nav panel */
+  --color-bg-topbar:    #161616;   /* header bar */
+  --color-bg-card:      #1C1C1C;   /* stat cards, modals, chart panels */
+  --color-border:       #2C2C2C;   /* all card borders, dividers */
+
+  --color-accent-primary:   #FF6B2B;  /* CTA buttons, active nav, brand */
+  --color-accent-secondary: #FFAE00;  /* % change, chart highlights */
+  --color-accent-active-bg: rgba(255, 107, 43, 0.12); /* active nav item fill */
+
+  --color-text-primary:  #F5F5F5;  /* headings, stat numbers */
+  --color-text-muted:    #888780;  /* subtitles, nav labels, hints */
+}
+
 /* ===== Custom Base Styles ===== */
 @layer base {
   html {
@@ -11,7 +27,9 @@
   }
 
   body {
-    @apply font-sans text-gray-100 bg-dark-900;
+    @apply font-sans;
+    color: var(--color-text-primary);
+    background-color: var(--color-bg-page);
   }
 
   /* Custom Scrollbar */
@@ -21,21 +39,22 @@
   }
 
   ::-webkit-scrollbar-track {
-    @apply bg-dark-900;
+    background-color: var(--color-bg-page);
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply bg-dark-400 rounded-full;
+    background-color: var(--color-border);
+    border-radius: 9999px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-dark-300;
+    background-color: var(--color-text-muted);
   }
 
   /* Firefox scrollbar */
   * {
     scrollbar-width: thin;
-    scrollbar-color: #2d3a5e #0f0f23;
+    scrollbar-color: var(--color-border) var(--color-bg-page);
   }
 }
 
@@ -43,17 +62,17 @@
 @layer components {
   /* Glass Morphism */
   .glass {
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--color-bg-card);
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--color-border);
   }
 
   .glass-strong {
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--color-bg-topbar);
     backdrop-filter: blur(40px);
     -webkit-backdrop-filter: blur(40px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    border: 1px solid var(--color-border);
   }
 
   .glass-card {
@@ -63,21 +82,21 @@
   /* Gradient Text */
   .gradient-text {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, #818cf8, #a78bfa, #c084fc);
+    background-image: linear-gradient(135deg, var(--color-accent-primary), var(--color-accent-secondary));
   }
 
   .gradient-text-brand {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, #6366f1, #8b5cf6);
+    background-image: linear-gradient(135deg, var(--color-accent-primary), var(--color-accent-secondary));
   }
 
   /* Gradient Backgrounds */
   .gradient-bg {
-    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    background: linear-gradient(135deg, var(--color-accent-primary), var(--color-accent-secondary));
   }
 
   .gradient-bg-hover:hover {
-    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    background: linear-gradient(135deg, #e05316, #d97706);
   }
 
   /* Gradient Border */
@@ -92,7 +111,7 @@
     inset: 0;
     border-radius: inherit;
     padding: 1px;
-    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    background: linear-gradient(135deg, var(--color-accent-primary), var(--color-accent-secondary));
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
@@ -106,12 +125,12 @@
 
   .card-hover:hover {
     transform: translateY(-4px) scale(1.01);
-    box-shadow: 0 20px 40px rgba(99, 102, 241, 0.15);
+    box-shadow: 0 20px 40px rgba(255, 107, 43, 0.15);
   }
 
   /* Shimmer Skeleton Loader */
   .skeleton {
-    @apply relative overflow-hidden bg-dark-700 rounded-lg;
+    @apply relative overflow-hidden bg-white/5 rounded-lg;
   }
 
   .skeleton::after {
@@ -142,7 +161,9 @@
 
   /* Nav Link Active */
   .nav-link-active {
-    @apply bg-brand-500/10 border-l-2 border-brand-500 text-white;
+    background-color: var(--color-accent-active-bg);
+    border-left: 2px solid var(--color-accent-primary);
+    color: var(--color-text-primary);
   }
 
   /* Tooltip */
@@ -172,7 +193,8 @@
   }
 
   .badge-brand {
-    @apply bg-brand-500/20 text-brand-400;
+    background-color: var(--color-accent-active-bg);
+    color: var(--color-accent-primary);
   }
 }
 

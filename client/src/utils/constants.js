@@ -32,14 +32,14 @@ export const STATUS_COLORS = {
   uploaded: { bg: 'bg-blue-500/20', text: 'text-blue-400', dot: 'bg-blue-400' },
   processing: { bg: 'bg-amber-500/20', text: 'text-amber-400', dot: 'bg-amber-400' },
   profiled: { bg: 'bg-emerald-500/20', text: 'text-emerald-400', dot: 'bg-emerald-400' },
-  analyzed: { bg: 'bg-violet-500/20', text: 'text-violet-400', dot: 'bg-violet-400' },
+  analyzed: { bg: 'bg-brand-500/20', text: 'text-brand-400', dot: 'bg-brand-500' },
   error: { bg: 'bg-rose-500/20', text: 'text-rose-400', dot: 'bg-rose-400' },
   completed: { bg: 'bg-emerald-500/20', text: 'text-emerald-400', dot: 'bg-emerald-400' },
 }
 
 // Chart Color Palette
 export const CHART_COLORS = [
-  '#6366f1', '#8b5cf6', '#a78bfa', '#818cf8',
+  '#FF6B2B', '#FFAE00', '#FF8651', '#fbbf24',
   '#10b981', '#34d399', '#6ee7b7',
   '#f59e0b', '#fbbf24', '#fcd34d',
   '#f43f5e', '#fb7185', '#fda4af',
@@ -48,7 +48,8 @@ export const CHART_COLORS = [
 
 // Gradient presets for charts
 export const CHART_GRADIENTS = {
-  indigo: { start: '#6366f1', end: '#8b5cf6' },
+  indigo: { start: '#FF6B2B', end: '#FFAE00' },
+  brand: { start: '#FF6B2B', end: '#FFAE00' },
   emerald: { start: '#10b981', end: '#34d399' },
   amber: { start: '#f59e0b', end: '#fbbf24' },
   rose: { start: '#f43f5e', end: '#fb7185' },

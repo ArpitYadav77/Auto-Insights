@@ -18,7 +18,7 @@ const pythonClient = axios.create({
 const profileDataset = async (filePath) => {
   try {
     const response = await pythonClient.post('/api/profile', {
-      file_path: filePath,
+      filePath: filePath,
     });
     return response.data;
   } catch (error) {
@@ -46,7 +46,7 @@ const profileDataset = async (filePath) => {
 const runEDA = async (filePath) => {
   try {
     const response = await pythonClient.post('/api/eda', {
-      file_path: filePath,
+      filePath: filePath,
     });
     return response.data;
   } catch (error) {
@@ -76,7 +76,7 @@ const executeCode = async (code, filePath) => {
   try {
     const response = await pythonClient.post('/api/execute', {
       code,
-      file_path: filePath,
+      filePath: filePath,
     });
     return response.data;
   } catch (error) {

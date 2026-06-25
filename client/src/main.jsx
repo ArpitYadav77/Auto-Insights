@@ -18,9 +18,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             toastOptions={{
               duration: 4000,
               style: {
-                background: 'rgba(26, 26, 46, 0.95)',
+                background: 'rgba(28, 28, 28, 0.95)',
                 color: '#e2e8f0',
-                border: '1px solid rgba(255,255,255,0.1)',
+                border: '1px solid rgba(44, 44, 44, 0.5)',
                 backdropFilter: 'blur(20px)',
                 borderRadius: '12px',
                 fontSize: '14px',
@@ -29,13 +29,13 @@ ReactDOM.createRoot(document.getElementById('root')).render(
               success: {
                 iconTheme: {
                   primary: '#10b981',
-                  secondary: '#0f0f23',
+                  secondary: '#1C1C1C',
                 },
               },
               error: {
                 iconTheme: {
                   primary: '#f43f5e',
-                  secondary: '#0f0f23',
+                  secondary: '#1C1C1C',
                 },
               },
             }}

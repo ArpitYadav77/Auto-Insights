@@ -28,7 +28,7 @@ export default function TrendChart({
   xKey = 'date',
   yKey = 'value',
   title = 'Trend',
-  color = '#6366f1',
+  color = '#FF6B2B',
   height = 280,
 }) {
   const chartData = Array.isArray(data) ? data : []
@@ -67,7 +67,7 @@ export default function TrendChart({
             activeDot={{
               r: 5,
               fill: color,
-              stroke: '#0f0f23',
+              stroke: '#0D0D0D',
               strokeWidth: 2,
             }}
             name={title}

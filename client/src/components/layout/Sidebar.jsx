@@ -8,12 +8,9 @@ import {
   HiOutlineUser,
   HiOutlineChevronLeft,
   HiOutlineChevronRight,
-  HiOutlineMoon,
-  HiOutlineSun,
   HiOutlineSparkles,
 } from 'react-icons/hi'
 import { useAuth } from '../../context/AuthContext'
-import { useTheme } from '../../context/ThemeContext'
 import { getInitials } from '../../utils/helpers'
 
 const navItems = [
@@ -25,7 +22,6 @@ const navItems = [
 
 export default function Sidebar({ collapsed, onToggle }) {
   const { user } = useAuth()
-  const { isDark, toggleTheme } = useTheme()
   const location = useLocation()
 
   return (
@@ -120,29 +116,7 @@ export default function Sidebar({ collapsed, onToggle }) {
 
       {/* Bottom Section */}
       <div className="border-t border-white/10 p-2 space-y-2">
-        {/* Theme Toggle */}
-        <button
-          onClick={toggleTheme}
-          className="flex items-center gap-3 w-full px-3 py-2 rounded-xl text-gray-400 hover:text-white hover:bg-white/5 transition-all duration-200"
-        >
-          {isDark ? (
-            <HiOutlineSun className="w-5 h-5 flex-shrink-0 text-amber-400" />
-          ) : (
-            <HiOutlineMoon className="w-5 h-5 flex-shrink-0 text-brand-400" />
-          )}
-          <AnimatePresence>
-            {!collapsed && (
-              <motion.span
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="text-sm font-medium whitespace-nowrap"
-              >
-                {isDark ? 'Light Mode' : 'Dark Mode'}
-              </motion.span>
-            )}
-          </AnimatePresence>
-        </button>
+
 
         {/* User Info */}
         <div className="flex items-center gap-3 px-3 py-2 rounded-xl bg-white/5">

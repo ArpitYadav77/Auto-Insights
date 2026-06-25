@@ -32,7 +32,19 @@ app.use(
 // CORS – allow requests from frontend
 app.use(
   cors({
-    origin: config.FRONTEND_URL,
+    origin: (origin, callback) => {
+      if (
+        !origin || 
+        origin === config.FRONTEND_URL || 
+        origin.endsWith('.vercel.app') ||
+        config.NODE_ENV === 'development' ||
+        origin.startsWith('http://localhost')
+      ) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],

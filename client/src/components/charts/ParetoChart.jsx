@@ -55,8 +55,8 @@ export default function ParetoChart({
         <ComposedChart data={chartData} margin={{ top: 10, right: 10, left: -10, bottom: 5 }}>
           <defs>
             <linearGradient id="paretoGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#6366f1" stopOpacity={0.9} />
-              <stop offset="100%" stopColor="#8b5cf6" stopOpacity={0.5} />
+              <stop offset="0%" stopColor="#FF6B2B" stopOpacity={0.9} />
+              <stop offset="100%" stopColor="#FFAE00" stopOpacity={0.5} />
             </linearGradient>
           </defs>
           <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" vertical={false} />
@@ -98,9 +98,9 @@ export default function ParetoChart({
             yAxisId="right"
             type="monotone"
             dataKey="cumulative"
-            stroke="#f59e0b"
+            stroke="#FFAE00"
             strokeWidth={2.5}
-            dot={{ r: 3, fill: '#f59e0b', stroke: '#0f0f23', strokeWidth: 2 }}
+            dot={{ r: 3, fill: '#FFAE00', stroke: '#0D0D0D', strokeWidth: 2 }}
             name="Cumulative %"
           />
         </ComposedChart>

@@ -18,6 +18,16 @@ export default function KPICard({
       iconText: 'text-brand-400',
       glow: 'group-hover:shadow-brand',
     },
+    indigo: {
+      iconBg: 'from-brand-500/20 to-accent-500/20',
+      iconText: 'text-brand-400',
+      glow: 'group-hover:shadow-brand',
+    },
+    accent: {
+      iconBg: 'from-accent-500/20 to-brand-500/20',
+      iconText: 'text-accent-400',
+      glow: 'group-hover:shadow-[0_4px_30px_rgba(255,174,0,0.3)]',
+    },
     emerald: {
       iconBg: 'from-emerald-500/20 to-emerald-400/20',
       iconText: 'text-emerald-400',
@@ -34,9 +44,9 @@ export default function KPICard({
       glow: 'group-hover:shadow-[0_4px_30px_rgba(244,63,94,0.3)]',
     },
     violet: {
-      iconBg: 'from-violet-500/20 to-violet-400/20',
-      iconText: 'text-violet-400',
-      glow: 'group-hover:shadow-[0_4px_30px_rgba(139,92,246,0.3)]',
+      iconBg: 'from-accent-500/20 to-brand-500/20',
+      iconText: 'text-accent-400',
+      glow: 'group-hover:shadow-[0_4px_30px_rgba(255,174,0,0.3)]',
     },
   }
 
