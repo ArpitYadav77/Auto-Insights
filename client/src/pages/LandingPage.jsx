@@ -113,13 +113,18 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Stats */}
+      {/* Highlights */}
       <section className="py-16 px-6 border-y border-white/5">
-        <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
-          <StatCounter end={10000} label="Datasets Analyzed" suffix="+" />
-          <StatCounter end={50000} label="Insights Generated" suffix="+" />
-          <StatCounter end={99} label="Accuracy Rate" suffix="%" />
-          <StatCounter end={500} label="Active Users" suffix="+" />
+        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="text-center">
+            <div className="text-lg md:text-xl font-semibold text-white">Upload CSV or Excel files up to 50MB</div>
+          </div>
+          <div className="text-center">
+            <div className="text-lg md:text-xl font-semibold text-white">Data quality checks, hypotheses, SQL and code in one place</div>
+          </div>
+          <div className="text-center">
+            <div className="text-lg md:text-xl font-semibold text-white">Built for people who don&apos;t write SQL</div>
+          </div>
         </div>
       </section>
 

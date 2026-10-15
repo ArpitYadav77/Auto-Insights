@@ -17,58 +17,117 @@ const MODEL = config.OPENAI_MODEL;
  * @param {string} userPrompt
  * @returns {Object} Parsed JSON from the model response
  */
-const callOpenAI = async (systemPrompt, userPrompt) => {
-  if (isGemini) {
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
-    const response = await axios.post(url, {
-      system_instruction: {
-        parts: [{ text: systemPrompt }]
-      },
-      contents: [{
-        role: 'user',
-        parts: [{ text: userPrompt }]
-      }],
-      generationConfig: {
-        response_mime_type: 'application/json',
-        temperature: 0.7
-      }
-    });
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-    const content = response.data.candidates[0].content.parts[0].text;
+// Retry a function with exponential backoff on 429 / 5xx.
+const withRetry = async (fn, { retries = 3, baseDelayMs = 2000 } = {}) => {
+  let lastErr;
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    try {
+      return await fn();
+    } catch (err) {
+      lastErr = err;
+      const status = err?.response?.status || err?.status;
+      const retriable = status === 429 || (status >= 500 && status < 600);
+      if (!retriable || attempt === retries) break;
+
+      // Honour Retry-After if the server sent one (seconds or HTTP-date).
+      let waitMs = baseDelayMs * Math.pow(2, attempt);
+      const retryAfter = err?.response?.headers?.['retry-after'];
+      if (retryAfter) {
+        const asNum = Number(retryAfter);
+        if (!Number.isNaN(asNum)) waitMs = asNum * 1000;
+      }
+      // Also honour Gemini's structured retryDelay if present.
+      const retryDelay = err?.response?.data?.error?.details
+        ?.find?.((d) => d?.['@type']?.includes('RetryInfo'))?.retryDelay;
+      if (retryDelay) {
+        const secs = parseFloat(String(retryDelay).replace('s', ''));
+        if (!Number.isNaN(secs)) waitMs = Math.max(waitMs, secs * 1000);
+      }
+
+      console.warn(`AI call hit ${status}; retrying in ${Math.round(waitMs)}ms (attempt ${attempt + 1}/${retries})`);
+      await sleep(waitMs);
+    }
+  }
+  throw lastErr;
+};
+
+// Turn provider errors into a clean, user-facing message.
+const normaliseAIError = (err) => {
+  const status = err?.response?.status || err?.status;
+  if (status === 429) {
+    const providerMsg =
+      err?.response?.data?.error?.message || err?.message || 'Rate limit exceeded.';
+    const e = new Error(
+      `AI provider rate limit exceeded (429). Free Gemini tier allows ~10 requests/minute and ~250/day. Wait a minute and retry, or upgrade your API key. (${providerMsg})`
+    );
+    e.status = 429;
+    return e;
+  }
+  if (status === 401 || status === 403) {
+    const e = new Error('AI provider rejected the API key (check OPENAI_API_KEY).');
+    e.status = status;
+    return e;
+  }
+  return err;
+};
+
+const callOpenAI = async (systemPrompt, userPrompt) => {
+  try {
+    if (isGemini) {
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
+      const response = await withRetry(() =>
+        axios.post(url, {
+          system_instruction: { parts: [{ text: systemPrompt }] },
+          contents: [{ role: 'user', parts: [{ text: userPrompt }] }],
+          generationConfig: {
+            response_mime_type: 'application/json',
+            temperature: 0.7,
+          },
+        })
+      );
+
+      const content = response.data.candidates[0].content.parts[0].text;
+      try {
+        return JSON.parse(content);
+      } catch (parseError) {
+        const jsonMatch = content.match(/```(?:json)?\s*([\s\S]*?)```/);
+        if (jsonMatch) {
+          return JSON.parse(jsonMatch[1].trim());
+        }
+        throw new Error('Failed to parse Gemini response as JSON.');
+      }
+    }
+
+    // Fallback to OpenAI
+    const response = await withRetry(() =>
+      client.chat.completions.create({
+        model: MODEL,
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: userPrompt },
+        ],
+        temperature: 0.7,
+        max_tokens: 4096,
+        response_format: { type: 'json_object' },
+      })
+    );
+
+    const content = response.choices[0].message.content;
+
     try {
       return JSON.parse(content);
     } catch (parseError) {
+      // Attempt to extract JSON from markdown code fences
       const jsonMatch = content.match(/```(?:json)?\s*([\s\S]*?)```/);
       if (jsonMatch) {
         return JSON.parse(jsonMatch[1].trim());
       }
-      throw new Error('Failed to parse Gemini response as JSON.');
+      throw new Error('Failed to parse OpenAI response as JSON.');
     }
-  }
-
-  // Fallback to OpenAI
-  const response = await client.chat.completions.create({
-    model: MODEL,
-    messages: [
-      { role: 'system', content: systemPrompt },
-      { role: 'user', content: userPrompt },
-    ],
-    temperature: 0.7,
-    max_tokens: 4096,
-    response_format: { type: 'json_object' },
-  });
-
-  const content = response.choices[0].message.content;
-
-  try {
-    return JSON.parse(content);
-  } catch (parseError) {
-    // Attempt to extract JSON from markdown code fences
-    const jsonMatch = content.match(/```(?:json)?\s*([\s\S]*?)```/);
-    if (jsonMatch) {
-      return JSON.parse(jsonMatch[1].trim());
-    }
-    throw new Error('Failed to parse OpenAI response as JSON.');
+  } catch (err) {
+    throw normaliseAIError(err);
   }
 };
 

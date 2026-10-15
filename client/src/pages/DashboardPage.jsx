@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { HiOutlineDatabase, HiOutlineChartBar, HiOutlineDocumentReport, HiOutlineLightningBolt, HiOutlineCloudUpload, HiOutlineEye } from 'react-icons/hi'
-import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts'
 import { useAuth } from '../context/AuthContext'
 import { getDatasets } from '../api/datasets'
 import { getReports } from '../api/reports'
@@ -11,27 +10,6 @@ import DatasetCard from '../components/cards/DatasetCard'
 import { Skeleton } from '../components/common/Loader'
 import Button from '../components/common/Button'
 import { getGreeting, formatNumber } from '../utils/helpers'
-import { CHART_COLORS } from '../utils/constants'
-
-const mockActivity = Array.from({ length: 14 }, (_, i) => ({
-  day: `Day ${i + 1}`,
-  datasets: Math.floor(Math.random() * 8) + 1,
-  analyses: Math.floor(Math.random() * 12) + 2,
-}))
-
-const CustomTooltip = ({ active, payload, label }) => {
-  if (!active || !payload?.length) return null
-  return (
-    <div className="glass rounded-lg p-3 border border-white/10 text-xs">
-      <p className="text-gray-300 font-medium mb-1">{label}</p>
-      {payload.map((p, i) => (
-        <p key={i} style={{ color: p.color }} className="flex justify-between gap-4">
-          <span>{p.name}:</span><span className="font-semibold">{p.value}</span>
-        </p>
-      ))}
-    </div>
-  )
-}
 
 export default function DashboardPage() {
   const { user } = useAuth()
@@ -77,36 +55,20 @@ export default function DashboardPage() {
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          <KPICard title="Total Datasets" value={datasets.length} icon={<HiOutlineDatabase />} color="indigo" change={12} changeType="increase" />
-          <KPICard title="Analyses Done" value={profiledCount} icon={<HiOutlineChartBar />} color="violet" change={8} changeType="increase" />
-          <KPICard title="Reports Generated" value={reports.length} icon={<HiOutlineDocumentReport />} color="emerald" change={5} changeType="increase" />
-          <KPICard title="Data Points" value={formatNumber(totalRows)} icon={<HiOutlineLightningBolt />} color="amber" change={24} changeType="increase" />
+          <KPICard title="Total Datasets" value={datasets.length} icon={<HiOutlineDatabase />} color="indigo" />
+          <KPICard title="Analyses Done" value={profiledCount} icon={<HiOutlineChartBar />} color="violet" />
+          <KPICard title="Reports Generated" value={reports.length} icon={<HiOutlineDocumentReport />} color="emerald" />
+          <KPICard title="Data Points" value={formatNumber(totalRows)} icon={<HiOutlineLightningBolt />} color="amber" />
         </div>
       )}
 
       {/* Activity Chart + Quick Actions */}
       <div className="grid lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 glass rounded-2xl p-6 border border-white/5">
+        <div className="lg:col-span-2 glass rounded-2xl p-6 border border-white/5 flex flex-col">
           <h3 className="text-lg font-semibold text-white mb-4">Activity Overview</h3>
-          <ResponsiveContainer width="100%" height={260}>
-            <AreaChart data={mockActivity}>
-              <defs>
-                <linearGradient id="gIndigo" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor={CHART_COLORS[0]} stopOpacity={0.3} />
-                  <stop offset="95%" stopColor={CHART_COLORS[0]} stopOpacity={0} />
-                </linearGradient>
-                <linearGradient id="gViolet" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor={CHART_COLORS[1]} stopOpacity={0.3} />
-                  <stop offset="95%" stopColor={CHART_COLORS[1]} stopOpacity={0} />
-                </linearGradient>
-              </defs>
-              <XAxis dataKey="day" stroke="#4b5563" tick={{ fill: '#9ca3af', fontSize: 11 }} axisLine={false} tickLine={false} />
-              <YAxis stroke="#4b5563" tick={{ fill: '#9ca3af', fontSize: 11 }} axisLine={false} tickLine={false} />
-              <Tooltip content={<CustomTooltip />} />
-              <Area type="monotone" dataKey="datasets" name="Datasets" stroke={CHART_COLORS[0]} fill="url(#gIndigo)" strokeWidth={2} />
-              <Area type="monotone" dataKey="analyses" name="Analyses" stroke={CHART_COLORS[1]} fill="url(#gViolet)" strokeWidth={2} />
-            </AreaChart>
-          </ResponsiveContainer>
+          <div className="flex-1 flex items-center justify-center min-h-[260px] text-center">
+            <p className="text-gray-400 text-sm">Activity will appear here after you run analyses.</p>
+          </div>
         </div>
 
         <div className="glass rounded-2xl p-6 border border-white/5 flex flex-col gap-4">
